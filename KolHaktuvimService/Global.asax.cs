@@ -21,10 +21,10 @@ namespace KolHaktuvimService
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Init();
+            InitApp();
         }
 
-        private void Init()
+        private void InitApp()
         {
             DAL.Instance.Init();
         }
