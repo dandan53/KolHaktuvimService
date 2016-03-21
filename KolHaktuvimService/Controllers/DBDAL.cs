@@ -39,7 +39,7 @@ namespace KolHaktuvimService.Controllers
         {
             if (IsPersonExist(person, type) == false)
             {
-                var newMember = new Person() {Name = person};
+                var newMember = new Person() {Name = person, Type = type};
                 context.People.Add(newMember);
                 context.SaveChanges();
             }
