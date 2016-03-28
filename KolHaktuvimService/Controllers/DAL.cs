@@ -58,10 +58,12 @@ namespace KolHaktuvimService.Controllers
                 if (type.Equals(REFUA))
                 {
                     refuaPersonList.Add(person);
+                    refuaPersonList.Sort();
                 }
                 else if (type.Equals(ILUI))
                 {
                     iluiPersonList.Add(person);
+                    iluiPersonList.Sort();
                 }
                 
                 DBDAL.Instance.AddPerson(person, type);
@@ -114,7 +116,9 @@ namespace KolHaktuvimService.Controllers
         public void Init()
         {
             iluiPersonList = DBDAL.Instance.GetPersonList(ILUI);
+            iluiPersonList.Sort();
             refuaPersonList = DBDAL.Instance.GetPersonList(REFUA);
+            refuaPersonList.Sort();
         }
 
     }
