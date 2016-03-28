@@ -51,6 +51,22 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
+        public List<string> GetPersonList(string type, int pageNumber, int pageSize)
+        {
+            List<string> retVal = null;
+
+            if (type.Equals(REFUA))
+            {
+                retVal = refuaPersonList.GetRange(pageNumber, pageSize);
+            }
+            else if (type.Equals(ILUI))
+            {
+                retVal = iluiPersonList.GetRange(pageNumber, pageSize);
+            }
+
+            return retVal;
+        }
+
         public bool AddPerson(string person, string type)
         {
             if (IsPersonExist(person, type) == false)

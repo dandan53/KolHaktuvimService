@@ -19,6 +19,14 @@ namespace KolHaktuvimService.Controllers
             return resp;
         }
 
+        public HttpResponseMessage Get(string type, int pageNumber, int pageSize)
+        {
+            var resp = Request.CreateResponse<List<string>>(
+          HttpStatusCode.OK, DAL.Instance.GetPersonList(type, pageNumber, pageSize));
+
+            return resp;
+        }
+
         public HttpResponseMessage Post(string person, string type)
         {
             var retVal = DAL.Instance.AddPerson(person, type);
