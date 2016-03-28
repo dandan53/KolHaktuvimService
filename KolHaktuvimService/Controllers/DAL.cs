@@ -70,6 +70,25 @@ namespace KolHaktuvimService.Controllers
             return true;
         }
 
+        public bool RemovePerson(string person, string type)
+        {
+            if (IsPersonExist(person, type))
+            {
+                if (type.Equals(REFUA))
+                {
+                    refuaPersonList.Remove(person);
+                }
+                else if (type.Equals(ILUI))
+                {
+                    iluiPersonList.Remove(person);
+                }
+
+                DBDAL.Instance.RemovePerson(person, type);
+            }
+
+            return true;
+        }
+
         public bool IsPersonExist(string person, string type)
         {
             bool retVal = false;

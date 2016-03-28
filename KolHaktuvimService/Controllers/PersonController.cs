@@ -51,10 +51,13 @@ namespace KolHaktuvimService.Controllers
         //{
         //}
 
-        // DELETE api/values/5
-        //public void Delete([FromBody]string person)
-        //{
-        //    DAL.Instance.RemovePerson(person);
-        //}
+        public HttpResponseMessage Delete(string person, string type)
+        {
+            var retVal = DAL.Instance.RemovePerson(person, type);
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(retVal.ToString())
+            };
+        }
     }
 }
