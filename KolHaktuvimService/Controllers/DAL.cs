@@ -51,17 +51,31 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
-        public List<string> GetPersonList(string type, int pageNumber, int pageSize)
+        public List<string> GetPersonList(string type, int start, int pageSize)
         {
             List<string> retVal = null;
 
             if (type.Equals(REFUA))
             {
-                retVal = refuaPersonList.GetRange(pageNumber, pageSize);
+                if (start + pageSize < refuaPersonList.Count())
+                {
+                    retVal = refuaPersonList.GetRange(start, pageSize);                    
+                }
+                else if (start < refuaPersonList.Count())
+                {
+                    retVal = refuaPersonList.GetRange(start, refuaPersonList.Count() - start);                    
+                }
             }
             else if (type.Equals(ILUI))
             {
-                retVal = iluiPersonList.GetRange(pageNumber, pageSize);
+                if (start + pageSize < iluiPersonList.Count())
+                {
+                    retVal = iluiPersonList.GetRange(start, pageSize);
+                }
+                else if (start < iluiPersonList.Count())
+                {
+                    retVal = iluiPersonList.GetRange(start, iluiPersonList.Count() - start);
+                }
             }
 
             return retVal;

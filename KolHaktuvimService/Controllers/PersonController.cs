@@ -11,18 +11,18 @@ namespace KolHaktuvimService.Controllers
 {
     public class PersonController : ApiController
     {
-        public HttpResponseMessage Get(string type)
+      /*  public HttpResponseMessage Get(string type)
         {
             var resp = Request.CreateResponse<List<string>>(
           HttpStatusCode.OK, DAL.Instance.GetPersonList(type));
 
             return resp;
-        }
+        }*/
 
-        public HttpResponseMessage Get(string type, int pageNumber, int pageSize)
+        public HttpResponseMessage Get(string type, int start, int pageSize)
         {
             var resp = Request.CreateResponse<List<string>>(
-          HttpStatusCode.OK, DAL.Instance.GetPersonList(type, pageNumber, pageSize));
+          HttpStatusCode.OK, DAL.Instance.GetPersonList(type, start, pageSize));
 
             return resp;
         }
