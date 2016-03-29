@@ -143,6 +143,22 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
+        public List<string> Search(string searchText, string type)
+        {
+            List<string> retVal = null;
+
+            if (type.Equals(REFUA))
+            {
+                retVal = refuaPersonList.FindAll(s => s.Contains(searchText));
+            }
+            else if (type.Equals(ILUI))
+            {
+                retVal = iluiPersonList.FindAll(s => s.Contains(searchText));
+            }
+
+            return retVal;
+        }
+
         public void Init()
         {
             iluiPersonList = DBDAL.Instance.GetPersonList(ILUI);

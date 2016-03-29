@@ -11,14 +11,6 @@ namespace KolHaktuvimService.Controllers
 {
     public class PersonController : ApiController
     {
-      /*  public HttpResponseMessage Get(string type)
-        {
-            var resp = Request.CreateResponse<List<string>>(
-          HttpStatusCode.OK, DAL.Instance.GetPersonList(type));
-
-            return resp;
-        }*/
-
         public HttpResponseMessage Get(string type, int start, int pageSize)
         {
             var resp = Request.CreateResponse<List<string>>(
@@ -35,7 +27,15 @@ namespace KolHaktuvimService.Controllers
                 Content = new StringContent(retVal.ToString())
             };
         }
-        
+
+        public HttpResponseMessage Get(string searchText, string type)
+        {
+            var resp = Request.CreateResponse<List<string>>(
+          HttpStatusCode.OK, DAL.Instance.Search(searchText, type));
+
+            return resp;
+        }
+
         // GET api/person
         //public List<string> Get()
         //{
