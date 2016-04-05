@@ -17,6 +17,8 @@ namespace KolHaktuvimService.Controllers
 
         private List<string> refuaPersonList = new List<string>();
 
+        private List<string> personList = new List<string>();
+
         private static DAL instance = null;
 
         private DAL()
@@ -95,7 +97,10 @@ namespace KolHaktuvimService.Controllers
                     iluiPersonList.Add(person);
                     iluiPersonList.Sort();
                 }
-                
+
+                personList = iluiPersonList.Concat(refuaPersonList).ToList();
+                personList.Sort();
+
                 DBDAL.Instance.AddPerson(person, type);
             }
 
@@ -114,6 +119,9 @@ namespace KolHaktuvimService.Controllers
                 {
                     iluiPersonList.Remove(person);
                 }
+
+                personList = iluiPersonList.Concat(refuaPersonList).ToList();
+                personList.Sort();
 
                 DBDAL.Instance.RemovePerson(person, type);
             }
@@ -143,19 +151,22 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
-        public List<string> Search(string searchText, string type)
+
+        public List<string> Search(string searchText, int start, int pageSize)
         {
             List<string> retVal = null;
 
-            if (type.Equals(REFUA))
-            {
-                retVal = refuaPersonList.FindAll(s => s.Contains(searchText));
-            }
-            else if (type.Equals(ILUI))
-            {
-                retVal = iluiPersonList.FindAll(s => s.Contains(searchText));
-            }
+            retVal = personList.FindAll(s => s.Contains(searchText));
 
+            if (start + pageSize < retVal.Count())
+            {
+                retVal = retVal.GetRange(start, pageSize);
+            }
+            else if (start < retVal.Count())
+            {
+                retVal = retVal.GetRange(start, retVal.Count() - start);
+            }
+            
             return retVal;
         }
 
@@ -165,6 +176,9 @@ namespace KolHaktuvimService.Controllers
             iluiPersonList.Sort();
             refuaPersonList = DBDAL.Instance.GetPersonList(REFUA);
             refuaPersonList.Sort();
+
+            personList = iluiPersonList.Concat(refuaPersonList).ToList();
+            personList.Sort();
         }
 
     }

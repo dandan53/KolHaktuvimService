@@ -11,10 +11,13 @@ namespace KolHaktuvimService.Controllers
 {
     public class PersonController : ApiController
     {
-        public HttpResponseMessage Get(string type, int start, int pageSize)
+        public HttpResponseMessage Get(string type, int start, int pageSize, string searchText)
         {
-            var resp = Request.CreateResponse<List<string>>(
-          HttpStatusCode.OK, DAL.Instance.GetPersonList(type, start, pageSize));
+            List<string> list = (searchText != null && type == null) ? 
+                DAL.Instance.Search(searchText, start, pageSize) : 
+                DAL.Instance.GetPersonList(type, start, pageSize);
+            
+            var resp = Request.CreateResponse<List<string>>(HttpStatusCode.OK, list);
 
             return resp;
         }
@@ -28,13 +31,23 @@ namespace KolHaktuvimService.Controllers
             };
         }
 
-        public HttpResponseMessage Get(string searchText, string type)
+        // search
+        //public HttpResponseMessage Search(string searchText, string type, int start, int pageSize)
+        //{
+        //    var resp = Request.CreateResponse<List<string>>(
+        //  HttpStatusCode.OK, DAL.Instance.Search(searchText, type));
+
+        //    return resp;
+        //}
+
+        // search
+        /*public HttpResponseMessage Get(string searchText, string type)
         {
             var resp = Request.CreateResponse<List<string>>(
           HttpStatusCode.OK, DAL.Instance.Search(searchText, type));
 
             return resp;
-        }
+        }*/
 
         // GET api/person
         //public List<string> Get()
