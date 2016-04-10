@@ -80,5 +80,6 @@ namespace KolHaktuvimService.Controllers
                 Content = new StringContent(retVal.ToString())
             };
         }
+
     }
 }

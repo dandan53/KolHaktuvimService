@@ -170,6 +170,18 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
+        public bool RemoveAll()
+        {
+            refuaPersonList = new List<string>();
+            iluiPersonList = new List<string>();
+            personList = new List<string>();
+            
+            DBDAL.Instance.RemoveAll();
+        
+            return true;
+        }
+
+
         public void Init()
         {
             iluiPersonList = DBDAL.Instance.GetPersonList(ILUI);

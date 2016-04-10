@@ -63,7 +63,14 @@ namespace KolHaktuvimService.Controllers
             var retVal = members.Exists(x => x.Name.Equals(person) && x.Type.Equals(type));
             return retVal;
         }
-        
+
+        public void RemoveAll()
+        {
+            foreach (var entity in context.People)
+                context.People.Remove(entity);
+
+            context.SaveChanges();
+        }
 
         //private int CreateMemberId()
         //{
