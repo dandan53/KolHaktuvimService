@@ -21,6 +21,15 @@ namespace KolHaktuvimService.Controllers
 
         private static DAL instance = null;
 
+        public enum MessageCode
+        {
+            Error,
+            PersonAdded,
+            PersonRemoved,
+            PersonExists,
+            PersonDoesntExist
+        };
+
         private DAL()
         {
         }
@@ -83,8 +92,8 @@ namespace KolHaktuvimService.Controllers
             return retVal;
         }
 
-        public bool AddPerson(string person, string type)
-        {
+        public MessageCode AddPerson(string person, string type)
+        {      
             if (IsPersonExist(person, type) == false)
             {
                 if (type.Equals(REFUA))
@@ -102,13 +111,17 @@ namespace KolHaktuvimService.Controllers
                 personList.Sort();
 
                 DBDAL.Instance.AddPerson(person, type);
-            }
 
-            return true;
+                return MessageCode.PersonAdded;
+            }
+            else
+            {
+                return MessageCode.PersonExists;
+            }
         }
 
-        public bool RemovePerson(string person, string type)
-        {
+        public MessageCode RemovePerson(string person, string type)
+        {           
             if (IsPersonExist(person, type))
             {
                 if (type.Equals(REFUA))
@@ -124,9 +137,13 @@ namespace KolHaktuvimService.Controllers
                 personList.Sort();
 
                 DBDAL.Instance.RemovePerson(person, type);
-            }
 
-            return true;
+                return MessageCode.PersonRemoved;
+            }
+            else
+            {
+                return MessageCode.PersonDoesntExist;
+            }
         }
 
         public bool IsPersonExist(string person, string type)
